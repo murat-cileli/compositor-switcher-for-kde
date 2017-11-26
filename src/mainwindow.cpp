@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QCloseEvent>
 #include <QDebug>
 #include <QTimer>
 #include <QSystemTrayIcon>
@@ -9,6 +10,7 @@
 #include <QProcess>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QIcon>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,16 +18,26 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QSystemTrayIcon *trayIcon = new QSystemTrayIcon(this);
+    QSystemTrayIcon* trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon::fromTheme("draw-square-inverted-corners"));
+    trayIcon->show();
+
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(showWindow(QSystemTrayIcon::ActivationReason)));
 
     QDir configDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/compositor-switcher");
+
     if (!configDir.exists()) {
         configDir.mkpath(".");
     }
 
+    configPath = configDir.path();
+
+    loadProcessList();
+    isCompositorActive();
+
     QTimer *checkTimer = new QTimer(this);
     connect(checkTimer, SIGNAL(timeout()), this, SLOT(check()));
-    checkTimer->start(3000);
+    checkTimer->start(ui->sbInterval->value() * 1000);
 }
 
 MainWindow::~MainWindow()
@@ -43,6 +55,8 @@ void MainWindow::on_btnAdd_clicked()
 
     ui->processList->addItem(ui->processName->text());
     ui->processName->clear();
+
+    saveProcessList();
 }
 
 void MainWindow::check() {
@@ -83,10 +97,73 @@ bool MainWindow::isCompositorActive() {
     }
 }
 
+void MainWindow::saveProcessList()
+{
+    int i;
+
+    QString fileName = configPath + QString("/process_list");
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::WriteOnly)) {
+        return;
+    }
+
+    QTextStream out(&file);
+
+    for (i = 0; i < ui->processList->count(); i++) {
+        QListWidgetItem* item = ui->processList->item(i);
+        out << item->text() << "\n";
+    }
+
+    file.close();
+}
+
+void MainWindow::loadProcessList()
+{
+    QString fileName = configPath + QString("/process_list");
+    QFile file(fileName);
+
+    if(!file.open(QIODevice::ReadOnly)) {
+       return;
+    }
+
+    QTextStream in(&file);
+
+    while(!in.atEnd()) {
+        QListWidgetItem* item = new QListWidgetItem;
+        item->setText(in.readLine().trimmed());
+        ui->processList->addItem(item);
+    }
+
+    file.close();
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange && isMinimized()) {
+            this->hide();
+            event->ignore();
+    }
+}
+
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    event->accept();
+    qApp->exit();
+}
+
+void MainWindow::showWindow(QSystemTrayIcon::ActivationReason r)
+{
+    if (r == QSystemTrayIcon::Trigger) {
+        this->show();
+        this->activateWindow();
+    }
+}
 
 void MainWindow::on_btnRemove_clicked()
 {
     qDeleteAll(ui->processList->selectedItems());
+    saveProcessList();
 }
 
 

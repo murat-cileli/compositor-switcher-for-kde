@@ -38,7 +38,7 @@ public:
     QLabel *label_2;
     QLabel *lblState;
     QFrame *frame_2;
-    QSpinBox *spinBox_2;
+    QSpinBox *sbInterval;
     QLabel *lblState_2;
     QLabel *label_6;
     QLabel *label_7;
@@ -64,7 +64,6 @@ public:
         btnAdd->setObjectName(QStringLiteral("btnAdd"));
         btnAdd->setGeometry(QRect(160, 30, 61, 30));
         processList = new QListWidget(centralWidget);
-        new QListWidgetItem(processList);
         processList->setObjectName(QStringLiteral("processList"));
         processList->setGeometry(QRect(20, 70, 201, 151));
         processList->setSelectionMode(QAbstractItemView::MultiSelection);
@@ -88,11 +87,11 @@ public:
         frame_2->setGeometry(QRect(240, 80, 201, 91));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
-        spinBox_2 = new QSpinBox(frame_2);
-        spinBox_2->setObjectName(QStringLiteral("spinBox_2"));
-        spinBox_2->setGeometry(QRect(15, 41, 49, 30));
-        spinBox_2->setMinimum(3);
-        spinBox_2->setMaximum(300);
+        sbInterval = new QSpinBox(frame_2);
+        sbInterval->setObjectName(QStringLiteral("sbInterval"));
+        sbInterval->setGeometry(QRect(15, 41, 49, 30));
+        sbInterval->setMinimum(3);
+        sbInterval->setMaximum(300);
         lblState_2 = new QLabel(frame_2);
         lblState_2->setObjectName(QStringLiteral("lblState_2"));
         lblState_2->setGeometry(QRect(115, 15, 71, 16));
@@ -127,6 +126,9 @@ public:
 
         retranslateUi(MainWindow);
 
+        btnAdd->setDefault(true);
+
+
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
@@ -135,13 +137,6 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Compositor Switcher for KDE", Q_NULLPTR));
         label->setText(QApplication::translate("MainWindow", "Process Name", Q_NULLPTR));
         btnAdd->setText(QApplication::translate("MainWindow", "Add", Q_NULLPTR));
-
-        const bool __sortingEnabled = processList->isSortingEnabled();
-        processList->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = processList->item(0);
-        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "notepadqq", Q_NULLPTR));
-        processList->setSortingEnabled(__sortingEnabled);
-
         btnRemove->setText(QApplication::translate("MainWindow", "Remove Selected", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "Compositor State:", Q_NULLPTR));
         lblState->setText(QString());
