@@ -2,11 +2,22 @@
 
 ![Compositor Switcher for KDE](https://www.muratcileli.com/wp-content/uploads/static/compositor-switcher-for-kde.png "Logo Title Text 1")
 
-##### Why should I use?
-If you are a gamer. Some of GNU/Linux window managers' compositors causes screen tearing and FPS drop in games. Compositor Switcher for KDE, disable compositor when certain processes activated and re-enable when processes terminated.
+Some of GNU/Linux window managers’ compositors causes screen tearing issues and FPS dropdowns in games. There are two ways to control compositor state while running games / OpenGL applications.
+
+##### 1. KWin's Window Rules 
+
+KWin, can do this natively on a per-program or per-window basis, using its own rule engine.
+
+Just right-click the title bar in the **Target Program** → **More actions** → **Special Application Settings**, and enjoy the many, many possibilities KWin offers. Blocking compositing for that whole program or that specific window is an option in the **"Appearance and Fixes"** tab.
+
+Besides the user manually setting this things to their liking, well done programs can ask the WM to disable compositing for their particular windows, directly, and Plasma's window manager will obey such requests.
+
+##### 2. This Tool
+
+If you think controlling compositor state by **process names** is easy than setting the KWin rules, you can use this tool alternatively.
 
 ##### OK, looks good. How can I use?
-Download latest release from "Releases" section. Make executable and run.
+Download latest release from "Releases" section. Make executable and run. Also you can build your own executable from sources. 
 
 ##### Give me some process names!
 * steam
