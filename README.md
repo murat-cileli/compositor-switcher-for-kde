@@ -19,7 +19,7 @@ If you think controlling compositor state by **process names** is easy than sett
 ### OK, looks good. How can I use?
 Download latest release from "Releases" section. Make executable and run. Also you can build your own executable from sources. 
 
-##### Give me some process names!
+### Give me some process names!
 * steam
 * fs-uae
 * fs-uae-launcher
