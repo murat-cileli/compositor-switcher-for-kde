@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/murat-cileli/compositor-switcher-for-kde.svg?branch=master)](https://travis-ci.org/murat-cileli/compositor-switcher-for-kde)
+
 # Compositor Switcher for KDE
 
 ![Compositor Switcher for KDE](https://www.muratcileli.com/wp-content/uploads/static/compositor-switcher-for-kde.png "Logo Title Text 1")
