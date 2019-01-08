@@ -2,7 +2,7 @@
 
 # Compositor Switcher for KDE
 
-![Compositor Switcher for KDE](https://www.muratcileli.com/wp-content/uploads/static/compositor-switcher-for-kde.png "Logo Title Text 1")
+![compositor-switcher-for-kde](https://user-images.githubusercontent.com/6532000/50812875-776f2080-1325-11e9-997b-a9d33c504ca1.png)
 
 Some of GNU/Linux window managers’ compositors causes screen tearing issues and FPS dropdowns in games. Compositor state can be controlled in different ways while running games / OpenGL applications.
 
